@@ -33,3 +33,51 @@ for A in range(-100, 101):  # Loop through all integer values from -100 to 100
             break
 
 print("Numbers that don't meet the testing objective:", matching_numbers)
+
+#*****************************************************************************************************************#
+
+# Another approach that we can take here is by only checking the value of C
+# If the value of C is same in any other case, we take that value of A to be included in not meeting the test objectives.
+
+B = 1
+
+operations = [
+    ("A = A - B, C = A * 2", lambda A: (A - B, (A - B) * 2)),
+    ("A = A + B, C = A * 2", lambda A: (A + B, (A + B) * 2)),
+    ("A = A + B, C = A - 2", lambda A: (A + B, A + B - 2)),
+    ("A = A + B, C = A / 2", lambda A: (A + B, (A + B) / 2)),
+    ("A = A - B, C = A + 2", lambda A: (A - B, A - B + 2)),
+    ("A = A - B, C = A / 2", lambda A: (A - B, (A - B) / 2)),
+    ("A = A * B, C = A + 2", lambda A: (A * B, A * B + 2)),
+    ("A = A * B, C = A - 2", lambda A: (A * B, A * B - 2)),
+    ("A = A * B, C = A / 2", lambda A: (A * B, (A * B) / 2)),
+    ("A = A / B, C = A + 2", lambda A: (A / B, A / B + 2)),
+    ("A = A / B, C = A - 2", lambda A: (A / B, A / B - 2)),
+    ("A = A / B, C = A * 2", lambda A: (A / B, (A / B) * 2)),
+    ("A = A + B, C = A + 2", lambda A: (A + B, A + B + 2)),
+    ("A = A - B, C = A - 2", lambda A: (A - B, A - B - 2)),
+    ("A = A * B, C = A * 2", lambda A: (A * B, A * B * 2)),
+    ("A = A / B, C = A / 2", lambda A: (A / B, A / B / 2)),
+]
+
+matching_numbers = []
+
+for A in range(-100, 101):  # Loop through all integer values from -100 to 100
+    # Calculate the final value of C for the first operation
+    _, first_operation_result_C = operations[0][1](A)
+
+    # Compare with other operations
+    for i, (_, func) in enumerate(operations[1:], start=2):
+        _, result_C = func(A)
+        if result_C == first_operation_result_C:
+            matching_numbers.append(A)
+            break
+
+print("Numbers that don't meet the testing objective:", matching_numbers)
+
+# Doing this approach, we get six integers that don't meet testing objective. The output is: 
+# Numbers that don't meet the testing objective: [-1, 0, 1, 3, 4, 5]
+
+
+
+
