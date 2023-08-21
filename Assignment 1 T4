@@ -1,0 +1,35 @@
+B = 1
+
+operations = [
+    ("A = A - B, C = A * 2", lambda A: (A - B, (A - B) * 2)),
+    ("A = A + B, C = A * 2", lambda A: (A + B, (A + B) * 2)),
+    ("A = A + B, C = A - 2", lambda A: (A + B, A + B - 2)),
+    ("A = A + B, C = A / 2", lambda A: (A + B, (A + B) / 2)),
+    ("A = A - B, C = A + 2", lambda A: (A - B, A - B + 2)),
+    ("A = A - B, C = A / 2", lambda A: (A - B, (A - B) / 2)),
+    ("A = A * B, C = A + 2", lambda A: (A * B, A * B + 2)),
+    ("A = A * B, C = A - 2", lambda A: (A * B, A * B - 2)),
+    ("A = A * B, C = A / 2", lambda A: (A * B, (A * B) / 2)),
+    ("A = A / B, C = A + 2", lambda A: (A / B, A / B + 2)),
+    ("A = A / B, C = A - 2", lambda A: (A / B, A / B - 2)),
+    ("A = A / B, C = A * 2", lambda A: (A / B, (A / B) * 2)),
+    ("A = A + B, C = A + 2", lambda A: (A + B, A + B + 2)),
+    ("A = A - B, C = A - 2", lambda A: (A - B, A - B - 2)),
+    ("A = A * B, C = A * 2", lambda A: (A * B, A * B * 2)),
+    ("A = A / B, C = A / 2", lambda A: (A / B, A / B / 2)),
+]
+
+matching_numbers = []
+
+for A in range(-100, 101):  # Loop through all integer values from -100 to 100
+    # Calculate the results for the first operation
+    first_operation_result_A, first_operation_result_C = operations[0][1](A)
+
+    # Compare with other operations
+    for i, (operation, func) in enumerate(operations[1:], start=2):
+        result_A, result_C = func(A)
+        if result_A == first_operation_result_A and result_C == first_operation_result_C:
+            matching_numbers.append(A)
+            break
+
+print("Numbers that don't meet the testing objective:", matching_numbers)
